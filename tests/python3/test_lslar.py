@@ -10,4 +10,4 @@ medusa.lslar = types.MethodType(lslar,medusa)
     
 def test_lslar():  
     print()         
-    print(medusa.lslar("/usr/bin"))
+    print(medusa.lslar("/etc"))

@@ -6,7 +6,7 @@ def lslar(self, target_path,max_depth=3,current_depth=0):
     import time
     outstr = ""
     if os.path.isdir(target_path):
-        for filename in os.listdir(target_path):
+        for filename in sorted(os.listdir(target_path)):
             try:
                 filepath = os.path.join(target_path, filename)
                 stat_info = os.stat(filepath)
@@ -23,7 +23,9 @@ def lslar(self, target_path,max_depth=3,current_depth=0):
                 owner = pwd.getpwuid(stat_info.st_uid).pw_name
                 group = grp.getgrgid(stat_info.st_gid).gr_name
                 file_time = time.strftime("%Y-%m-%d %H:%M", time.localtime(stat_info.st_mtime))
-                indentation = " "*4*current_depth
+                indentation = ""
+                if(current_depth > 0):
+                    indentation = " "*4*(current_depth-1) + "|---"                 
                 if filetype == "d":
                     filename = filename + " (" + filepath + ")"
 
@@ -34,7 +36,7 @@ def lslar(self, target_path,max_depth=3,current_depth=0):
                 if sgid_set:
                     sgid = " *SGID"
 
-                outstr += "{} {:<5} {:<10} {:<10} {:<13} {:<10} {} {}{}{}\n".format(filetype, permissions, owner, group, file_time, file_size,indentation , filename, suid, sgid)
+                outstr += "{} {:<5} {:<10} {:<10} {:<13} {:<10} {}{}{}{}\n".format(filetype, permissions, owner, group, file_time, file_size,indentation , filename, suid, sgid)
                 if os.path.isdir(filepath) and current_depth < max_depth:
                     outstr += self.lslar(filepath,max_depth=max_depth,current_depth=current_depth+1)
             except Exception as e:                
