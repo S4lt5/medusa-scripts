@@ -68,6 +68,6 @@ def find_interesting_files(self, target_path,max_depth=5,current_depth=0):
     return outstr
 
 try:
-    setattr(medusa, "find_interesting_files", lslar)
+    setattr(medusa, "find_interesting_files", find_interesting_files)
 except:
     pass
