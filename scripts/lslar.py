@@ -34,10 +34,10 @@ def lslar(self, target_path,max_depth=3,current_depth=0):
                 writable = ""
                 if file_mode & stat.S_IWUSR and stat_info.st_uid == current_uid:
                     writable = " *WRITABLE BY USER"
-                elif file_mode & stat.S_IWGRP and  stat_info.st_gid == current_gid:
-                     writable = " *WRITABLE BY GROUP"
-                elif file_mode & stat.S_IWOTH:  
-                     writable = " *WRITABLE BY ALL"
+                if file_mode & stat.S_IWGRP and  stat_info.st_gid == current_gid:
+                     writable = writable + " *WRITABLE BY GROUP"
+                if file_mode & stat.S_IWOTH:  
+                     writable = writable + " *WRITABLE BY ALL"
                 suid = ""
                 if suid_set:
                     suid = " *SUID"

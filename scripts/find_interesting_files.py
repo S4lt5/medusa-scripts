@@ -33,10 +33,10 @@ def find_interesting_files(self, target_path,max_depth=5,current_depth=0):
                 sgid = ""
                 if file_mode & stat.S_IWUSR and stat_info.st_uid == current_uid:
                     writable = " *WRITABLE BY USER"
-                elif file_mode & stat.S_IWGRP and  stat_info.st_gid == current_gid:
-                     writable = " *WRITABLE BY GROUP"
-                elif file_mode & stat.S_IWOTH:  
-                     writable = " *WRITABLE BY ALL"
+                if file_mode & stat.S_IWGRP and  stat_info.st_gid == current_gid:
+                     writable = writable + " *WRITABLE BY GROUP"
+                if file_mode & stat.S_IWOTH:  
+                     writable = writable + " *WRITABLE BY ALL"
                 
                 if suid_set:
                     suid = " *SUID"
